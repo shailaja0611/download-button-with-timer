@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>download button with timer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous"
+     referrerpolicy="no-referrer" />
+<style>
+ .container {
+    height: 600px;
+    width: 100%;
+    background-color: pink;
+}
+.download-btn {
+    margin-left: 550px;
+    margin-top: 300px;
+    padding: 16px 25px;
+    background-color: #4a98f7;
+    border: none;
+    color: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-size: 20px;
+}
+.download-btn:hover {
+    background-color: #2382f6;
+}
+.download-btn.timer b {
+    color: #f3b0dd;
+    padding: 0 8px;
+}
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <button class="download-btn" data-timer="5">
+        <i class="fa-solid fa-cloud-arrow-down"></i>
+        <span class="text">Download Files</span>
+        </button>
+   </div>
+<script>
+
+   const downloadBtn = document.querySelector(".download-btn");
+   const filelink = "https://drive.google.com/uc?export=download&id=16rTAYacGftyvTG1q2Edxnr7fXlurJwGy";
+
+    const initTimer = () => {
+     if (downloadBtn.classList.contains("disable-timer")) {
+        return (location.href = filelink);
+    }
+
+    let timer = downloadBtn.dataset.timer;
+    downloadBtn.classList.add("timer");
+    downloadBtn.innerHTML = ` Your File Will Download in <b>${timer} </b> seconds `;
+
+    const initCounter = setInterval(() => {
+    if (timer > 0) {
+      timer--;
+     downloadBtn.innerHTML = ` Your File Will Download in <b>${timer} </b> seconds `;
+    } else {
+     clearInterval(initCounter);
+     location.href = filelink;
+    downloadBtn.textContent = "Your File Is Downloading......";
+    setTimeout(() => {
+    downloadBtn.classList.replace("timer", "disable-timer");
+    downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> <span class="text">Download Again</span>';
+    }, 1000);
+                }
+    }, 1000);
+        };
+
+        downloadBtn.addEventListener("click", initTimer);
+</script>
+</body>
+</html>
+
+        
+    
+
+        
